@@ -1,0 +1,17 @@
+{
+  "name": "fortune-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "concurrently -k -n web,api -c cyan,magenta \"pnpm --filter @fortune/web dev\" \"pnpm --filter @fortune/api dev\"",
+    "dev:web": "pnpm --filter @fortune/web dev",
+    "dev:api": "pnpm --filter @fortune/api dev",
+    "build": "pnpm -r build",
+    "test": "pnpm --filter @fortune/saju-core test",
+    "lint": "pnpm -r lint",
+    "start:api": "node apps/api/dist/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
