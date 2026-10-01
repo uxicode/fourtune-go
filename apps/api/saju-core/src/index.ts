@@ -21,6 +21,7 @@ export {
 } from "./version.js"
 export { sipsungForStems, sipsungForPillar, SIPSUNG } from "./sipsung.js"
 export { daeunForward } from "./daeun.js"
+export { generateEasyInterpretation } from "./easyInterpretation.js"
 export type { SipsungName, PillarSipsung } from "./sipsung.js"
 export type {
   CalendarKind,
@@ -28,6 +29,7 @@ export type {
   ChartWithInterpretation,
   DaeunDto,
   DaeunStepDto,
+  EasyInterpretationDto,
   Gender,
   PillarDto,
   PillarSipsungDto,
@@ -40,3 +42,4 @@ export type {
   UnknownTimePolicy,
 } from "./types.js"
 export type { GejuRow } from "./content/geju14.js"
+

@@ -1,5 +1,8 @@
 import type { FiveElement, YinYang } from "manseryeok"
+export type { FiveElement, YinYang }
 import type { GejuRow } from "./content/geju14.js"
+
+
 
 export type CalendarKind = "solar" | "lunar"
 
@@ -97,6 +100,81 @@ export interface SajuContentDto {
   gejuReference: GejuRow[]
 }
 
+export interface EasyInterpretationDto {
+  oneLineSummary: string
+  keywords: string[]
+  dayMasterStory: {
+    stem: string
+    title: string
+    symbol: string
+    personality: string
+    innerMind: string
+  }
+  gejuAnalysis: {
+    detectedGeju: string
+    code: string
+    name: string
+    badge: string
+    meaning: string
+    roleInLife: string
+    advice: string
+  }
+  careerAndTalent: {
+    title: string
+    strengths: string[]
+    recommendedFields: string
+    workEnvironment: string
+  }
+  wealthStyle: {
+    title: string
+    pattern: string
+    advice: string
+  }
+  relationshipStyle: {
+    title: string
+    description: string
+    caution: string
+  }
+  elementBalance: {
+    counts: Record<"목" | "화" | "토" | "금" | "수", number>
+    strongest: string[]
+    weakest: string[]
+    prescriptions: string[]
+  }
+  luckAdvice: {
+    currentYear: number
+    currentYearGanzhi: string
+    currentYearInsight: string
+    lifeLesson: string
+  }
+  healthCare: {
+    vulnerableAreas: string[]
+    description: string
+    lifestyleAdvice: string
+  }
+  lifeGuidance: {
+    doNotDo: string[]
+    cautions: string[]
+    keepClose: string[]
+    luckyElements: {
+      colors: string
+      items: string
+      environment: string
+    }
+  }
+  fortuneTiming: {
+    peakLuck: {
+      signs: string[]
+      strategy: string
+    }
+    lowLuck: {
+      signs: string[]
+      strategy: string
+    }
+  }
+}
+
+
 export interface SajuChartDto {
   engineVersion: string
   /** 면책·출처 문구 배포 버전(웹·API·PDF 공통). */
@@ -129,8 +207,11 @@ export interface SajuChartDto {
   saeun: SaeunEntryDto[]
   /** 60갑자 일주·십성 키워드·격(참고) 등 앱 콘텐츠. */
   content?: SajuContentDto
+  /** 누구나 쉽게 읽을 수 있는 종합 사주 풀이. */
+  easyInterpretation?: EasyInterpretationDto
 }
 
 export interface ChartWithInterpretation extends SajuChartDto {
   interpretation: string
 }
+

@@ -100,6 +100,81 @@ export interface ChartRequestInput {
   saeunFromYear?: number
 }
 
+export interface EasyInterpretationDto {
+  oneLineSummary: string
+  keywords: string[]
+  dayMasterStory: {
+    stem: string
+    title: string
+    symbol: string
+    personality: string
+    innerMind: string
+  }
+  gejuAnalysis: {
+    detectedGeju: string
+    code: string
+    name: string
+    badge: string
+    meaning: string
+    roleInLife: string
+    advice: string
+  }
+  careerAndTalent: {
+    title: string
+    strengths: string[]
+    recommendedFields: string
+    workEnvironment: string
+  }
+  wealthStyle: {
+    title: string
+    pattern: string
+    advice: string
+  }
+  relationshipStyle: {
+    title: string
+    description: string
+    caution: string
+  }
+  elementBalance: {
+    counts: Record<"목" | "화" | "토" | "금" | "수", number>
+    strongest: string[]
+    weakest: string[]
+    prescriptions: string[]
+  }
+  luckAdvice: {
+    currentYear: number
+    currentYearGanzhi: string
+    currentYearInsight: string
+    lifeLesson: string
+  }
+  healthCare: {
+    vulnerableAreas: string[]
+    description: string
+    lifestyleAdvice: string
+  }
+  lifeGuidance: {
+    doNotDo: string[]
+    cautions: string[]
+    keepClose: string[]
+    luckyElements: {
+      colors: string
+      items: string
+      environment: string
+    }
+  }
+  fortuneTiming: {
+    peakLuck: {
+      signs: string[]
+      strategy: string
+    }
+    lowLuck: {
+      signs: string[]
+      strategy: string
+    }
+  }
+}
+
+
 export interface SajuChartDto {
   engineVersion: string
   disclaimerVersion: string
@@ -129,8 +204,10 @@ export interface SajuChartDto {
   daeun: DaeunDto
   saeun: SaeunEntryDto[]
   content?: SajuContentDto
+  easyInterpretation?: EasyInterpretationDto
 }
 
 export interface ChartWithInterpretation extends SajuChartDto {
   interpretation: string
 }
+

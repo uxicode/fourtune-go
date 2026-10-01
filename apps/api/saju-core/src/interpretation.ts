@@ -10,7 +10,81 @@ export function interpretBasic(chart: SajuChartDto): string {
   const st = chart.strength
   const du = chart.daeun
   const su = chart.saeun
-  const parts: string[] = [
+  const easy = chart.easyInterpretation
+
+  const parts: string[] = []
+
+  if (easy) {
+    parts.push(
+      "========================================",
+      "🌟 [알기 쉬운 사주 종합 풀이]",
+      `▶ 한 줄 요약: ${easy.oneLineSummary}`,
+      `▶ 핵심 키워드: ${easy.keywords.join(" · ")}`,
+      "========================================",
+      "",
+      `1. 타고난 성향과 본질 (${easy.dayMasterStory.stem} - ${easy.dayMasterStory.symbol})`,
+      easy.dayMasterStory.personality,
+      `[내면 심리] ${easy.dayMasterStory.innerMind}`,
+      "",
+      `2. 중심 격국: ${easy.gejuAnalysis.name} [${easy.gejuAnalysis.badge}]`,
+      `· 의미: ${easy.gejuAnalysis.meaning}`,
+      `· 사회적 역할: ${easy.gejuAnalysis.roleInLife}`,
+      `· 조언: ${easy.gejuAnalysis.advice}`,
+      "",
+      `3. 직업 및 적성: ${easy.careerAndTalent.title}`,
+      `· 핵심 강점: ${easy.careerAndTalent.strengths.join(", ")}`,
+      `· 추천 분야: ${easy.careerAndTalent.recommendedFields}`,
+      `· 적합 환경: ${easy.careerAndTalent.workEnvironment}`,
+      "",
+      `4. 재물운과 인간관계`,
+      `· 재물 스타일: [${easy.wealthStyle.title}] ${easy.wealthStyle.pattern}`,
+      `· 재물 조언: ${easy.wealthStyle.advice}`,
+      `· 인간관계: ${easy.relationshipStyle.description}`,
+      `· 관계 유의점: ${easy.relationshipStyle.caution}`,
+      "",
+      `5. 오행(목·화·토·금·수) 밸런스와 행운 개운법`,
+      `· 오행 분포: 목(${easy.elementBalance.counts.목}) 화(${easy.elementBalance.counts.화}) 토(${easy.elementBalance.counts.토}) 금(${easy.elementBalance.counts.금}) 수(${easy.elementBalance.counts.수})`,
+      `· 개운 처방:`,
+      ...easy.elementBalance.prescriptions.map((p) => `  - ${p}`),
+      "",
+      `6. 건강 관리 및 주의 장기`,
+      `· 취약 부위: ${easy.healthCare.vulnerableAreas.join(", ")}`,
+      `· ${easy.healthCare.description}`,
+      `· 생활 수칙: ${easy.healthCare.lifestyleAdvice}`,
+      "",
+      `7. 하지 말아야 할 것 & 조심해야 할 것`,
+      `[금기 사항 - 피해야 할 행동]`,
+      ...easy.lifeGuidance.doNotDo.map((d) => `  ✕ ${d}`),
+      `[주의 사항 - 일상 속 경계]`,
+      ...easy.lifeGuidance.cautions.map((c) => `  ! ${c}`),
+      "",
+      `8. 가까이 할 것 & 행운 팁`,
+      `[도움이 되는 사람/환경/습관]`,
+      ...easy.lifeGuidance.keepClose.map((k) => `  ○ ${k}`),
+      `· 행운의 색상: ${easy.lifeGuidance.luckyElements.colors}`,
+      `· 행운의 소품: ${easy.lifeGuidance.luckyElements.items}`,
+      `· 행운의 공간: ${easy.lifeGuidance.luckyElements.environment}`,
+      "",
+      `9. 운의 흐름: 운수 대통할 때 vs 운수 안 좋을 때`,
+      `[운수 대통할 때 (상승기 징조)]`,
+      ...easy.fortuneTiming.peakLuck.signs.map((s) => `  ▲ ${s}`),
+      `· 행동 전략: ${easy.fortuneTiming.peakLuck.strategy}`,
+      `[운수 안 좋을 때 (침체기 징조)]`,
+      ...easy.fortuneTiming.lowLuck.signs.map((s) => `  ▼ ${s}`),
+      `· 극복 전략: ${easy.fortuneTiming.lowLuck.strategy}`,
+      "",
+      `10. 올해(${easy.luckAdvice.currentYear}년 ${easy.luckAdvice.currentYearGanzhi}년) 운세와 인생 조언`,
+      `· 올해 흐름: ${easy.luckAdvice.currentYearInsight}`,
+      `· 마음에 새길 말: ${easy.luckAdvice.lifeLesson}`,
+      "",
+      "----------------------------------------",
+      "[상세 명리학 원국 및 만세력 지표 (참고용)]",
+      "----------------------------------------"
+    )
+  }
+
+
+  parts.push(
     "이 결과는 만세력(manseryeok) 사주원국 + 앱 내부 콘텐츠 DB(60갑자·십성·격국 참고) + 십성·신강/신약·대운·세운(휴리스틱)을 덧붙인 참고용 풀이입니다. 방파·학파에 따라 해석이 다를 수 있습니다.",
     `연·월·일·시: ${chart.summaryLine}`,
     "",
@@ -36,10 +110,11 @@ export function interpretBasic(chart: SajuChartDto): string {
     su.map((e) => `${e.year}년 ${e.ganzhi} (천간${e.stemSipsung}/지(본기)${e.branchSipsung})`).join(" | "),
     "",
     `고지: 오락·참고 목적이며, 중요한 결정은 본인 판단과 전문가 상담을 권장합니다. (disclaimer v${chart.disclaimerVersion})`,
-  ]
+  )
   if (chart.content) parts.push(...contentInterpretationLines(chart))
   return parts.join("\n")
 }
+
 
 export function chartWithInterpretation(input: ChartRequestInput): ChartWithInterpretation {
   const chart = calculateSajuChart(input)

@@ -3,9 +3,9 @@
   "private": true,
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "concurrently -k -n web,api -c cyan,magenta \"pnpm --filter @fortune/web dev\" \"pnpm --filter @fortune/api dev\"",
+    "dev": "pnpm --filter @fortune/saju-core build && concurrently -k -n web,api -c cyan,magenta \"pnpm --filter @fortune/web dev\" \"pnpm --filter @fortune/api dev\"",
     "dev:web": "pnpm --filter @fortune/web dev",
-    "dev:api": "pnpm --filter @fortune/api dev",
+    "dev:api": "pnpm --filter @fortune/saju-core build && pnpm --filter @fortune/api dev",
     "build": "pnpm -r build",
     "test": "pnpm --filter @fortune/saju-core test",
     "lint": "pnpm -r lint",

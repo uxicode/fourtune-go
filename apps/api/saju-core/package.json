@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "tsup",
+    "prepare": "tsup",
     "test": "vitest run"
   },
   "dependencies": {

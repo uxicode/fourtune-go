@@ -20,6 +20,7 @@ import { computeSaeun } from "./saeun.js"
 import { sipsungForPillar, type SipsungName } from "./sipsung.js"
 import { estimateDayMasterStrength } from "./strength.js"
 import { buildChartContent } from "./richContent.js"
+import { generateEasyInterpretation } from "./easyInterpretation.js"
 
 function mapPillar(
   detail: FourPillarsDetail,
@@ -169,7 +170,7 @@ function mapFullChart(
     day: mapPillar(raw, "day"),
     hour: mapPillar(raw, "hour"),
   }
-  return {
+  const chart: SajuChartDto = {
     engineVersion: getEngineVersion(),
     disclaimerVersion: DEFAULT_DISCLAIMER_VERSION,
     timeIsApproximate,
@@ -189,6 +190,8 @@ function mapFullChart(
     saeun,
     content: buildChartContent({ pillars, sipsungByPillar: sips }),
   }
+  chart.easyInterpretation = generateEasyInterpretation(chart)
+  return chart
 }
 
 export function calculateSajuChart(input: ChartRequestInput): SajuChartDto {
