@@ -4,6 +4,7 @@
  */
 export type CalendarKind = "solar" | "lunar"
 export type Gender = "male" | "female"
+export type FortuneMode = "a" | "b"
 
 type FiveElement = "목" | "화" | "토" | "금" | "수"
 type YinYang = "양" | "음"
@@ -98,6 +99,7 @@ export interface ChartRequestInput {
   unknownTimePolicy?: "solar_noon"
   gender: Gender
   saeunFromYear?: number
+  mode?: FortuneMode
 }
 
 export interface EasyInterpretationDto {
@@ -174,6 +176,42 @@ export interface EasyInterpretationDto {
   }
 }
 
+/** Mode A & B 공통: 올해 간략 포인트형 운세 */
+export interface YearlyBriefFortuneDto {
+  year: number
+  yearGanzhi: string
+  keyTheme: string
+  briefKeypoint: string
+  luckyAction: string
+  cautionAction: string
+}
+
+/** Mode B 전용: 올해 총운 상세 분석 */
+export interface YearlyFortuneDetailDto {
+  year: number
+  yearGanzhi: string
+  summary: string
+  careerLuck: string
+  wealthLuck: string
+  relationshipLuck: string
+  healthLuck: string
+  monthlyHighlight: string
+}
+
+/** Mode B 전용: 월별 운세 */
+export interface MonthlyFortuneDto {
+  month: number
+  ganzhi: string
+  solarMonthName: string
+  keyword: string
+  score: number // 1 ~ 5
+  scoreLabel: string // "대길(大吉)" | "호조(好調)" | "평온(平穩)" | "신중(愼重)" | "수성(守成)"
+  summary: string // 해당 월의 에너지 흐름 종합 총평
+  career: string // 직업 & 사업 & 학업운 상세
+  wealth: string // 재물 & 투자 & 소비운 상세
+  relationship: string // 애정 & 대인관계 & 인연운 상세
+  advice: string // 핵심 행동 팁 및 금기 사항
+}
 
 export interface SajuChartDto {
   engineVersion: string
@@ -205,9 +243,14 @@ export interface SajuChartDto {
   saeun: SaeunEntryDto[]
   content?: SajuContentDto
   easyInterpretation?: EasyInterpretationDto
+  mode?: FortuneMode
+  yearlyBrief?: YearlyBriefFortuneDto
+  yearlyFortuneDetail?: YearlyFortuneDetailDto
+  monthlyFortunes?: MonthlyFortuneDto[]
 }
 
 export interface ChartWithInterpretation extends SajuChartDto {
   interpretation: string
 }
+
 

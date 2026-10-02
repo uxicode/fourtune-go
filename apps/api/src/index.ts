@@ -70,7 +70,8 @@ function isChartRequestInput(x: unknown): x is ChartRequestInput {
     (o.timeUnknown || (o.hour >= 0 && o.hour <= 23 && o.minute >= 0 && o.minute <= 59)) &&
     (o.kind === "solar" || typeof o.isLeapMonth === "boolean") &&
     (o.gender === "male" || o.gender === "female") &&
-    (o.saeunFromYear === undefined || typeof o.saeunFromYear === "number")
+    (o.saeunFromYear === undefined || typeof o.saeunFromYear === "number") &&
+    (o.mode === undefined || o.mode === "a" || o.mode === "b")
   )
 }
 

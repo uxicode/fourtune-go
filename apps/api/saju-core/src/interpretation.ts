@@ -14,10 +14,34 @@ export function interpretBasic(chart: SajuChartDto): string {
 
   const parts: string[] = []
 
-  if (easy) {
+  if (chart.mode === "a") {
     parts.push(
       "========================================",
-      "🌟 [알기 쉬운 사주 종합 풀이]",
+      "🌱 [사주 맛보기 요약 - 무료 모드 A]",
+      `▶ 한 줄 총평: ${easy ? easy.oneLineSummary : chart.summaryLine}`,
+      `▶ 핵심 키워드: ${easy ? easy.keywords.join(" · ") : ""}`,
+      "========================================",
+      ""
+    )
+    if (chart.yearlyBrief) {
+      parts.push(
+        `[올해(${chart.yearlyBrief.year}년 ${chart.yearlyBrief.yearGanzhi}년) 간략 운세]`,
+        `· 핵심 테마: ${chart.yearlyBrief.keyTheme}`,
+        `· 운세 포인트: ${chart.yearlyBrief.briefKeypoint}`,
+        `· 행운을 부르는 행동: ${chart.yearlyBrief.luckyAction}`,
+        `· 올해 주의할 행동: ${chart.yearlyBrief.cautionAction}`,
+        "",
+        "🔒 [유료 모드 B 전용 콘텐츠]",
+        "  - 12가지 성향/격국/직업/재물/애정/건강/개운 종합 풀이 리포트",
+        "  - 올해 총운 상세 심층 분석 (직업·재물·애정·건강 종합)",
+        "  - 1월부터 12월까지 월별 상세 운세 및 행동 전략",
+        ""
+      )
+    }
+  } else if (easy) {
+    parts.push(
+      "========================================",
+      "🌟 [알기 쉬운 사주 종합 풀이 - 유료 모드 B]",
       `▶ 한 줄 요약: ${easy.oneLineSummary}`,
       `▶ 핵심 키워드: ${easy.keywords.join(" · ")}`,
       "========================================",
@@ -76,12 +100,51 @@ export function interpretBasic(chart: SajuChartDto): string {
       `10. 올해(${easy.luckAdvice.currentYear}년 ${easy.luckAdvice.currentYearGanzhi}년) 운세와 인생 조언`,
       `· 올해 흐름: ${easy.luckAdvice.currentYearInsight}`,
       `· 마음에 새길 말: ${easy.luckAdvice.lifeLesson}`,
-      "",
+      ""
+    )
+
+    if (chart.yearlyFortuneDetail) {
+      const yf = chart.yearlyFortuneDetail
+      parts.push(
+        "----------------------------------------",
+        `🔮 [올해(${yf.year}년 ${yf.yearGanzhi}년) 총운 심층 리포트]`,
+        "----------------------------------------",
+        `· 종합 총평: ${yf.summary}`,
+        `· 직업/사업운: ${yf.careerLuck}`,
+        `· 재물/투자운: ${yf.wealthLuck}`,
+        `· 애정/대인운: ${yf.relationshipLuck}`,
+        `· 건강/활력운: ${yf.healthLuck}`,
+        `· 연간 하이라이트: ${yf.monthlyHighlight}`,
+        ""
+      )
+    }
+
+    if (chart.monthlyFortunes && chart.monthlyFortunes.length > 0) {
+      parts.push(
+        "----------------------------------------",
+        `📅 [12개월 월별 운세 흐름]`,
+        "----------------------------------------"
+      )
+      for (const m of chart.monthlyFortunes) {
+        parts.push(
+          `▶ ${m.solarMonthName} (${m.ganzhi}월) - [${m.scoreLabel} ★${m.score}/5] #${m.keyword}`,
+          `· 총평: ${m.summary}`,
+          `· 직업/사업: ${m.career}`,
+          `· 재물/투자: ${m.wealth}`,
+          `· 애정/대인: ${m.relationship}`,
+          `· 행동 팁: ${m.advice}`,
+          ""
+        )
+      }
+    }
+
+    parts.push(
       "----------------------------------------",
       "[상세 명리학 원국 및 만세력 지표 (참고용)]",
       "----------------------------------------"
     )
   }
+
 
 
   parts.push(

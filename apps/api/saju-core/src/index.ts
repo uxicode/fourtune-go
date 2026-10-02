@@ -22,6 +22,11 @@ export {
 export { sipsungForStems, sipsungForPillar, SIPSUNG } from "./sipsung.js"
 export { daeunForward } from "./daeun.js"
 export { generateEasyInterpretation } from "./easyInterpretation.js"
+export {
+  generateYearlyBriefFortune,
+  generateYearlyFortuneDetail,
+  generateMonthlyFortunes,
+} from "./yearlyFortune.js"
 export type { SipsungName, PillarSipsung } from "./sipsung.js"
 export type {
   CalendarKind,
@@ -30,7 +35,9 @@ export type {
   DaeunDto,
   DaeunStepDto,
   EasyInterpretationDto,
+  FortuneMode,
   Gender,
+  MonthlyFortuneDto,
   PillarDto,
   PillarSipsungDto,
   SaeunEntryDto,
@@ -40,6 +47,8 @@ export type {
   SipsungNameDto,
   StrengthDto,
   UnknownTimePolicy,
+  YearlyBriefFortuneDto,
+  YearlyFortuneDetailDto,
 } from "./types.js"
 export type { GejuRow } from "./content/geju14.js"
 

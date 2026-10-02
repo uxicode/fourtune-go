@@ -23,8 +23,8 @@ function indexToLabel(i: number): string {
 }
 
 /**
- * 陽年: 甲丙戊庚壬 / 陰年: 乙丁己辛癸
- * 陽男·陰女 順, 陰男·陽女 逆.
+ * 대운의 순행 여부를 반환합니다.
+ * 陽男·陰女 順, 陰男·陽女 逆
  */
 export function daeunForward(
   isMale: boolean,
@@ -35,6 +35,9 @@ export function daeunForward(
   return !yang
 }
 
+/**
+ * 대운을 계산합니다.
+ */
 export function computeDaeun(opts: {
   detail: FourPillarsDetail
   birth: { year: number; month: number; day: number; hour: number; minute: number }

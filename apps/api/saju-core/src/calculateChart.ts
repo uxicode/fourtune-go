@@ -21,6 +21,11 @@ import { sipsungForPillar, type SipsungName } from "./sipsung.js"
 import { estimateDayMasterStrength } from "./strength.js"
 import { buildChartContent } from "./richContent.js"
 import { generateEasyInterpretation } from "./easyInterpretation.js"
+import {
+  generateYearlyBriefFortune,
+  generateYearlyFortuneDetail,
+  generateMonthlyFortunes,
+} from "./yearlyFortune.js"
 
 function mapPillar(
   detail: FourPillarsDetail,
@@ -191,8 +196,21 @@ function mapFullChart(
     content: buildChartContent({ pillars, sipsungByPillar: sips }),
   }
   chart.easyInterpretation = generateEasyInterpretation(chart)
+
+  const mode = input.mode ?? "a"
+  chart.mode = mode
+  // A, B 모드 공통: 올해 간략 포인트 운세
+  chart.yearlyBrief = generateYearlyBriefFortune(chart, saeunY)
+
+  // B 모드(유료) 전용: 올해 총운 상세 + 12개월 월별 운세
+  if (mode === "b") {
+    chart.yearlyFortuneDetail = generateYearlyFortuneDetail(chart, saeunY)
+    chart.monthlyFortunes = generateMonthlyFortunes(chart, saeunY)
+  }
+
   return chart
 }
+
 
 export function calculateSajuChart(input: ChartRequestInput): SajuChartDto {
   assertValidRequest(input)

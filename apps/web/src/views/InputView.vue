@@ -1,9 +1,10 @@
 <template>
   <div :class="$style.page">
-    <h1 :class="$style.title">생년월일 입력</h1>
+    <h1 :class="$style.title">생년월일 및 모드 입력</h1>
     <BirthForm
       :is-loading="store.isLoading"
       :error-text="store.displayError"
+      :initial-mode="initialMode"
       @submit="onSubmit"
     />
     <RouterLink to="/" :class="$style.back">← 처음으로</RouterLink>
@@ -11,13 +12,21 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router"
+import { computed } from "vue"
+import { useRoute, useRouter } from "vue-router"
 import BirthForm from "@/components/BirthForm.vue"
 import { useSajuStore } from "@/stores/saju"
-import type { CalendarKind, Gender } from "@/types/chart"
+import type { CalendarKind, FortuneMode, Gender } from "@/types/chart"
 
+const route = useRoute()
 const router = useRouter()
 const store = useSajuStore()
+
+const initialMode = computed<FortuneMode>(() => {
+  const m = route.query.mode as string | undefined
+  if (m === "a" || m === "b") return m
+  return store.currentMode
+})
 
 async function onSubmit(payload: {
   kind: CalendarKind
@@ -29,9 +38,15 @@ async function onSubmit(payload: {
   isLeapMonth: boolean
   timeUnknown: boolean
   gender: Gender
+  mode: FortuneMode
 }) {
   const ok = await store.submit(payload)
-  if (ok) await router.push({ name: "result" })
+  if (ok) {
+    await router.push({
+      name: "result",
+      query: { mode: payload.mode },
+    })
+  }
 }
 </script>
 

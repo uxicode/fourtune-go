@@ -8,6 +8,9 @@ export type CalendarKind = "solar" | "lunar"
 
 export type Gender = "male" | "female"
 
+/** 운세 서비스 모드: a(무료 맛보기), b(유료 상세) */
+export type FortuneMode = "a" | "b"
+
 /** 시를 모를 때: 정오(12:00)를 오시로 두어 ‘중앙 시진’에 해당시키는 정책(문서·UI와 일치). */
 export type UnknownTimePolicy = "solar_noon"
 
@@ -25,6 +28,8 @@ export interface ChartRequestInput {
   unknownTimePolicy?: UnknownTimePolicy
   gender: Gender
   saeunFromYear?: number
+  /** 서비스 모드 ('a': 무료 맛보기, 'b': 유료 전체) */
+  mode?: FortuneMode
 }
 
 export interface PillarDto {
@@ -174,6 +179,42 @@ export interface EasyInterpretationDto {
   }
 }
 
+/** Mode A & B 공통: 올해 간략 포인트형 운세 (총운·월별과 겹치지 않는 포인트형) */
+export interface YearlyBriefFortuneDto {
+  year: number
+  yearGanzhi: string
+  keyTheme: string
+  briefKeypoint: string
+  luckyAction: string
+  cautionAction: string
+}
+
+/** Mode B 전용: 올해 총운 상세 분석 */
+export interface YearlyFortuneDetailDto {
+  year: number
+  yearGanzhi: string
+  summary: string
+  careerLuck: string
+  wealthLuck: string
+  relationshipLuck: string
+  healthLuck: string
+  monthlyHighlight: string
+}
+
+/** Mode B 전용: 월별 운세 */
+export interface MonthlyFortuneDto {
+  month: number
+  ganzhi: string
+  solarMonthName: string
+  keyword: string
+  score: number // 1 ~ 5
+  scoreLabel: string // "대길(大吉)" | "호조(好調)" | "평온(平穩)" | "신중(愼重)" | "수성(守成)"
+  summary: string // 해당 월의 에너지 흐름 종합 총평
+  career: string // 직업 & 사업 & 학업운 상세
+  wealth: string // 재물 & 투자 & 소비운 상세
+  relationship: string // 애정 & 대인관계 & 인연운 상세
+  advice: string // 핵심 행동 팁 및 금기 사항
+}
 
 export interface SajuChartDto {
   engineVersion: string
@@ -209,9 +250,18 @@ export interface SajuChartDto {
   content?: SajuContentDto
   /** 누구나 쉽게 읽을 수 있는 종합 사주 풀이. */
   easyInterpretation?: EasyInterpretationDto
+  /** 서비스 모드 ('a' | 'b') */
+  mode?: FortuneMode
+  /** 올해 간략 포인트형 운세 (Mode A, B 모두 포함) */
+  yearlyBrief?: YearlyBriefFortuneDto
+  /** Mode B 전용: 올해 총운 상세 리포트 */
+  yearlyFortuneDetail?: YearlyFortuneDetailDto
+  /** Mode B 전용: 12개월 월별 운세 */
+  monthlyFortunes?: MonthlyFortuneDto[]
 }
 
 export interface ChartWithInterpretation extends SajuChartDto {
   interpretation: string
 }
+
 
