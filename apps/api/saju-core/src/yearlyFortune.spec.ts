@@ -76,10 +76,21 @@ describe("yearlyFortune & mode A/B branching", () => {
       expect(m.wealth.length).toBeGreaterThan(10)
       expect(m.relationship.length).toBeGreaterThan(10)
       expect(m.advice.length).toBeGreaterThan(10)
+      expect(m.summary).not.toContain("평소 계획했던 일을 본격적으로 실행에 옮기기에 아주 유리하며")
       scores.add(m.score)
     })
     // 12달의 점수가 고정 4~5점이 아니라 다양하게 분기(최소 2개 이상의 점수대)
     expect(scores.size).toBeGreaterThanOrEqual(2)
+
+    // 12달의 총평(summary)이 복사-붙여넣기 식이 아니라 각 월마다 고유하게 도출되는지 검증
+    const summaries = chart.monthlyFortunes!.map((m) => m.summary)
+    const uniqueSummaries = new Set(summaries)
+    expect(uniqueSummaries.size).toBe(12)
+
+    // 행동 가이드(advice)도 최소 5가지 이상의 서로 다른 십성별 실천 팁으로 다채롭게 분기
+    const advices = chart.monthlyFortunes!.map((m) => m.advice)
+    const uniqueAdvices = new Set(advices)
+    expect(uniqueAdvices.size).toBeGreaterThanOrEqual(5)
 
     // 텍스트 interpretation 검증
     const withInterp = chartWithInterpretation({
