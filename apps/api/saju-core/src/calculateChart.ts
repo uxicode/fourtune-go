@@ -26,6 +26,7 @@ import {
   generateYearlyFortuneDetail,
   generateMonthlyFortunes,
 } from "./yearlyFortune.js"
+import { generateDecisionTiming } from "./decisionTiming.js"
 
 function mapPillar(
   detail: FourPillarsDetail,
@@ -201,6 +202,9 @@ function mapFullChart(
   chart.mode = mode
   // A, B 모드 공통: 올해 간략 포인트 운세
   chart.yearlyBrief = generateYearlyBriefFortune(chart, saeunY)
+
+  // A, B 모드 공통: 결정 타이밍 (이직·계약·이사)
+  chart.decisionTiming = generateDecisionTiming(chart)
 
   // B 모드(유료) 전용: 올해 총운 상세 + 12개월 월별 운세
   if (mode === "b") {
