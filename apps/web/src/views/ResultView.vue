@@ -52,7 +52,13 @@
         :brief="chart.yearlyBrief"
       />
 
-      <!-- 4. 유료 전환 CTA 배너 (종합 풀이 및 월별 운세 잠금 안내) -->
+      <!-- 4. 결정 타이밍 (이직·계약·이사) — Mode A에서도 제공 -->
+      <DecisionTimingCard
+        v-if="chart.decisionTiming"
+        :timing="chart.decisionTiming"
+      />
+
+      <!-- 5. 유료 전환 CTA 배너 (종합 풀이 및 월별 운세 잠금 안내) -->
       <PaywallBanner
         :is-loading="store.isLoading"
         @upgrade="handleUpgrade"
@@ -75,7 +81,13 @@
         @refresh="handleUpgrade"
       />
 
-      <!-- 4. 올해 간략 포인트 운세도 함께 열람 가능 -->
+      <!-- 4. 결정 타이밍 (이직·계약·이사) -->
+      <DecisionTimingCard
+        v-if="chart.decisionTiming"
+        :timing="chart.decisionTiming"
+      />
+
+      <!-- 5. 올해 간략 포인트 운세도 함께 열람 가능 -->
       <YearlyBriefCard
         v-if="chart.yearlyBrief"
         :brief="chart.yearlyBrief"
@@ -203,6 +215,7 @@ import YearlyFortuneCard from "@/components/YearlyFortuneCard.vue"
 import MonthlyFortuneCard from "@/components/MonthlyFortuneCard.vue"
 import PaywallBanner from "@/components/PaywallBanner.vue"
 import DisclaimerBlock from "@/components/DisclaimerBlock.vue"
+import DecisionTimingCard from "@/components/DecisionTimingCard.vue"
 import { useSajuStore } from "@/stores/saju"
 import type { FortuneMode, SajuContentDto } from "@/types/chart"
 

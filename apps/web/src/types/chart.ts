@@ -213,6 +213,33 @@ export interface MonthlyFortuneDto {
   advice: string // 핵심 행동 팁 및 금기 사항
 }
 
+/** 결정 타이밍: 이직·계약·이사 각 결정에 대한 이번 달 vs 다음 달 비교 */
+export type DecisionGrade = "매우 좋음" | "좋음" | "보통" | "신중" | "불리"
+
+export interface DecisionMonthResult {
+  ganzhi: string
+  monthLabel: string
+  score: number // 1~10
+  grade: DecisionGrade
+  reasons: string[]
+}
+
+export interface DecisionItem {
+  type: "이직" | "계약" | "이사"
+  icon: string
+  thisMonth: DecisionMonthResult
+  nextMonth: DecisionMonthResult
+  recommendation: "이번 달" | "다음 달" | "둘 다 비슷"
+  summary: string
+}
+
+export interface DecisionTimingDto {
+  items: DecisionItem[]
+  referenceDate: string
+  thisMonthLabel: string
+  nextMonthLabel: string
+}
+
 export interface SajuChartDto {
   engineVersion: string
   disclaimerVersion: string
@@ -247,6 +274,7 @@ export interface SajuChartDto {
   yearlyBrief?: YearlyBriefFortuneDto
   yearlyFortuneDetail?: YearlyFortuneDetailDto
   monthlyFortunes?: MonthlyFortuneDto[]
+  decisionTiming?: DecisionTimingDto
 }
 
 export interface ChartWithInterpretation extends SajuChartDto {
